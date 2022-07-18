@@ -1,2 +1,2 @@
 # tool
-useful tool
+useful tool written in go
