@@ -39,7 +39,6 @@ func (c *WorkerPool) listen() {
 			}
 			//Enqueue job into priority queue
 			c.pq.EnQueue(job)
-			//c.jobsChan <- job
 		}
 	}
 }
@@ -67,7 +66,6 @@ func (c *WorkerPool) deliver() {
 	for {
 		//has job in priority queue
 		if c.pq.Len() > 0 {
-			//todo check available worker
 			taskCount := c.pq.Len()
 			for i := 0; i < taskCount; i++ {
 				task := c.pq.DeQueue()
@@ -100,8 +98,8 @@ func NewWorkerPool() *WorkerPool {
 	return pool
 }
 
-func (c *WorkerPool) AddTask(task TaskMethod, params ...interface{}) {
-	c.inputChan <- &TaskParam{TaskMethod: task, TaskParam: params}
+func (c *WorkerPool) AddTask(task TaskMethod, priority int, params ...interface{}) {
+	c.inputChan <- &TaskParam{TaskMethod: task, TaskParam: params, TaskPriority: priority}
 }
 
 func (c *WorkerPool) Name() string {

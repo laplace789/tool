@@ -7,4 +7,5 @@ type TaskParam struct {
 	TaskMethod   TaskMethod
 	TaskParam    []interface{}
 	TaskPriority int
+	index        int //for package heap implement
 }

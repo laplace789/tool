@@ -1,6 +1,9 @@
 package workerpool
 
-import "container/heap"
+import (
+	"container/heap"
+	"sync"
+)
 
 type PriorityQueue interface {
 	EnQueue(*TaskParam)  //add Task to priority queue
@@ -10,7 +13,8 @@ type PriorityQueue interface {
 
 // PriorityQueueImp Todo thread safe
 type PriorityQueueImp struct {
-	pq *pqHeap
+	mux sync.RWMutex
+	pq  *pqHeap
 }
 
 func NewPriorityQueue() PriorityQueue {
@@ -22,17 +26,23 @@ func NewPriorityQueue() PriorityQueue {
 	return pq
 }
 
-func (p PriorityQueueImp) EnQueue(param *TaskParam) {
+func (p *PriorityQueueImp) EnQueue(param *TaskParam) {
+	p.mux.Lock()
 	heap.Push(p.pq, param)
+	p.mux.Unlock()
 }
 
-func (p PriorityQueueImp) DeQueue() *TaskParam {
+func (p *PriorityQueueImp) DeQueue() *TaskParam {
+	p.mux.Lock()
+	defer p.mux.Unlock()
 	if p.pq.Len() == 0 {
 		return nil
 	}
 	return heap.Pop(p.pq).(*TaskParam)
 }
 
-func (p PriorityQueueImp) Len() int {
+func (p *PriorityQueueImp) Len() int {
+	p.mux.RLock()
+	defer p.mux.RUnlock()
 	return p.pq.Len()
 }
