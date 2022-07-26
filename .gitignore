@@ -1,0 +1,8 @@
+.DS_Store
+logs/*.log
+.idea
+*.log
+*.xlsx
+logs
+*.env
+*.yml
