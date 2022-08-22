@@ -28,8 +28,8 @@ func NewPriorityQueue() PriorityQueue {
 
 func (p *PriorityQueueImp) EnQueue(param *TaskParam) {
 	p.mux.Lock()
+	defer p.mux.Unlock()
 	heap.Push(p.pq, param)
-	p.mux.Unlock()
 }
 
 func (p *PriorityQueueImp) DeQueue() *TaskParam {

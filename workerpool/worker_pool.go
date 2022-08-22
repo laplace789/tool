@@ -25,10 +25,6 @@ type WorkerPool struct {
 	wg     *sync.WaitGroup
 }
 
-func Init() {
-	WorkerPoolInstance = NewWorkerPool()
-}
-
 func (c *WorkerPool) listen() {
 	defer close(c.jobsChan)
 	for {
