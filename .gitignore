@@ -3,6 +3,6 @@ logs/*.log
 .idea
 *.log
 *.xlsx
-logs
 *.env
 *.yml
+conf/*.yaml

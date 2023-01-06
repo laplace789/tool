@@ -29,11 +29,13 @@ func TestRedisClient_Get(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			cfg := initRedisConf()
+			cfg := InitRedisConf("../conf")
 			rdb := NewRedisClient(cfg)
-			rdb.connect()
 			ctx := context.Background()
-			rdb.Set(ctx, tt.key, tt.val, time.Minute*50)
+			errSet := rdb.Set(ctx, tt.key, tt.val, time.Minute*50)
+			if errSet != nil {
+				t.Errorf("rdb set key err %v", errSet)
+			}
 			got, err := rdb.Get(ctx, tt.key)
 			if err != nil {
 				t.Errorf("err = %v", err)

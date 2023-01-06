@@ -19,8 +19,7 @@ type Config struct {
 	Open         bool   `json:"open" mapstructure:"open"`
 }
 
-func initRedisConf() *Config {
-	path := "./conf"
+func InitRedisConf(path string) *Config {
 	name := "redis"
 	configType := "yml"
 	conf := &Config{}
