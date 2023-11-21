@@ -2,7 +2,6 @@ package evnet
 
 import (
 	"sort"
-	"tool/util"
 )
 
 //EventHandlerInfo define event handler and the priority
@@ -42,7 +41,7 @@ func NewAsyncEventDispatcher(throttle int, chSize int) *EventDispatcher {
 							asinfo.Callback(asinfo.Evt, ret)
 						}
 
-						util.SafeCall(callbackf)
+						error.SafeCall(callbackf)
 					}
 				}
 			}
@@ -116,7 +115,7 @@ func (evg *EventDispatcher) OnEvent(evt *Event) (ret *EventRet) {
 
 	defer func() {
 		if err := recover(); err != nil {
-			util.GetStackInfo()
+			error.GetStackInfo()
 			ret.Error = err
 		}
 	}()
