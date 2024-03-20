@@ -27,7 +27,7 @@ type ConsistentHash struct {
 	replicas int                 //numbers of virtual node
 	keys     []uint64            //all the hash values store here
 	ring     map[uint64][]any    //circle ring map[`hash value`][]`virtual node`
-	nodes    map[string]struct{} //real node
+	nodes    map[string]struct{} //all node keys快速檢查使用
 	lock     sync.RWMutex
 }
 
