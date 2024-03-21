@@ -6,7 +6,6 @@ import (
 )
 
 func TestEventDispatcher_OnEvent(t *testing.T) {
-
 	tests := []struct {
 		name     string
 		throttle int
