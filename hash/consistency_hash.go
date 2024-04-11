@@ -25,9 +25,9 @@ type Func func(data []byte) uint64
 type ConsistentHash struct {
 	hashFunc Func
 	replicas int                 //numbers of virtual node
-	keys     []uint64            //all the hash values store here
-	ring     map[uint64][]any    //circle ring map[`hash value`][]`virtual node`
-	nodes    map[string]struct{} //all node keys快速檢查使用
+	keys     []uint64            //所有虛擬節點的keys值
+	ring     map[uint64][]any    //circle ring 放置所有虛擬節點 ex 2-1,2-2...
+	nodes    map[string]struct{} //真實節點
 	lock     sync.RWMutex
 }
 
